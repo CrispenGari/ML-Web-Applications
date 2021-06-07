@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/index.css')}}"
+    />
+    <title>Movies Reviews</title>
+  </head>
+  <body>
+    <div class="app">
+      <form class="app__form">
+        <h1>Movies Reviews</h1>
+        <textarea
+          cols="30"
+          rows="10"
+          id="review_text"
+          placeholder="Type a movie review..."
+        ></textarea>
+
+        <button type="submit" id="btn">Classify</button>
+      </form>
+
+      <div class="app__classification">
+        
+      </div>
+    </div>
+    <script src="{{url_for('static', filename='js/index.js')}}"></script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+body {
+  background: #fafafa;
+}
+h1,
+h2 {
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: 1px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.app {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: grid;
+  place-items: center;
+  padding: 0px 10px;
+}
+.app__form,
+.app__classification {
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 2px 2px 2px 2px lightgray;
+  border-radius: 5px;
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.app__form > textarea {
+  width: 100%;
+  border-radius: 5px;
+  background-color: #fafafa;
+  padding: 10px;
+  font-size: 14px;
+  resize: none;
+  border: 1px solid lightgray;
+  outline: none;
+}
+.app__form > textarea:focus {
+  border: 1px solid lightseagreen;
+}
+.app__form > button {
+  width: 150px;
+  margin: 20px auto;
+  border: none;
+  outline: none;
+  background-color: lightseagreen;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.app__form > button:active {
+  opacity: 0.5;
+}
+.app__classification > h1.positive {
+  color: green;
+}
+.app__classification > h1.negative {
+  color: red;
+}
+.app__classification > p {
+  font-size: 13px;
+  padding: 10px;
+  border-bottom: 1px solid lightseagreen;
+  margin-bottom: 10px;
+}
