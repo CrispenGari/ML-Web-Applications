@@ -4,8 +4,10 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 from flask import Flask, jsonify,request, make_response
 import tensorflow as tf
 from main import predict
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.config["ENV"] = "development"
 
 question_model = tf.keras.models.load_model("model/questions_model.h5")
