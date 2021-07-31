@@ -35,7 +35,7 @@ router.post("/history", async (req, res) => {
       classLabel,
       probability,
     },
-    (error, doc) => {
+    (error, docs) => {
       if (error) {
         throw error;
       }
