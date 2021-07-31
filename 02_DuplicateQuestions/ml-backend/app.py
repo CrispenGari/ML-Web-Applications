@@ -1,16 +1,75 @@
-import os, time
+
+"""
+Imports
+    * For ML model preperation refer to the main.py file
+"""
+import os,  json, time
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
-from flask import Flask, jsonify,request, make_response
+from flask import Flask, jsonify, request, make_response
 import tensorflow as tf
-from main import predict
 from flask_cors import CORS
 
+import numpy as np
+
+from nltk.tokenize import word_tokenize
+
+with open('data/word_indices.json', 'r') as reader:
+    word_indices = json.loads(reader.read())
+
+word_indices_reversed = dict([
+    (v, k) for (k, v) in word_indices.items()
+])
+max_words = 100
+
+def seq_to_text(sequences):
+  return " ".join(word_indices_reversed[i] for i in sequences )
+
+def text_to_seq(sent):
+  words = word_tokenize(sent.lower())
+  sequences = []
+  for word in words:
+    try:
+      sequences.append(word_indices[word])
+    except:
+      sequences.append(0)
+  return sequences
+
+def text_to_padded_sequences(sent):
+  tokens = text_to_seq(sent)
+  padded_tokens = tf.keras.preprocessing.sequence.pad_sequences([tokens], maxlen=max_words,
+                                                                padding="post", truncating="post")
+  return padded_tokens
+
+# The function that makes predictions
+
+def predict(model, qn1, qn2):
+  classes = ["not duplicate", "duplicate"]
+  qn1_tokens = text_to_padded_sequences(qn1)
+  qn2_tokens = text_to_padded_sequences(qn2)
+  probability = tf.squeeze(model.predict([qn1_tokens, qn2_tokens]), 0)[0]
+  classLabel = np.round(probability).astype('int32')
+
+  probability = probability if probability >= .5  else 1- probability
+  return {
+    "class": classes[classLabel],
+    "classLabel": f'{classLabel}',
+    "probability": f'{probability:.4f}'
+  }
+
+
+"""
+model loading
+"""
+question_model = tf.keras.models.load_model("model/questions_model.h5")
+"""
+flask application
+"""
 app = Flask(__name__)
 CORS(app)
 app.config["ENV"] = "development"
 
-question_model = tf.keras.models.load_model("model/questions_model.h5")
+
 
 # print(question_model.summary())
 
